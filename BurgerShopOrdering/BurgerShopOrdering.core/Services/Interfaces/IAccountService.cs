@@ -12,6 +12,5 @@ namespace BurgerShopOrdering.core.Services.Interfaces
     public interface IAccountService
     {
         Task<JwtSecurityToken> GenerateTokenAsync(ApplicationUser applicationUser);
-        Task<ResultModel<ApplicationUser>> GetUserByEmail(string email);
     }
 }

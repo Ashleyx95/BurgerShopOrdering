@@ -54,23 +54,5 @@ namespace BurgerShopOrdering.core.Services
 
             return token;
         }
-
-        public async Task<ResultModel<ApplicationUser>> GetUserByEmail(string email)
-        {
-            var user = await burgerDbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.NormalizedEmail == email.ToUpper());
-
-            var resultModel = new ResultModel<ApplicationUser>();
-
-            if (user is null)
-            {
-                resultModel.Errors.Add("Deze gebruiker is nog niet geregistreerd");
-            }
-            else
-            {
-                resultModel.Data = user;
-            }
-
-            return resultModel;
-        }
     }
 }

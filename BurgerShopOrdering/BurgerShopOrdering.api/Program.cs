@@ -1,8 +1,15 @@
 
 using BurgerShopOrdering.core.Data;
 using BurgerShopOrdering.core.Entities;
+using BurgerShopOrdering.core.Services.Interfaces;
+using BurgerShopOrdering.core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using BurgerShopOrdering.api.Services;
 
 namespace BurgerShopOrdering.api
 {
@@ -27,13 +34,69 @@ namespace BurgerShopOrdering.api
                 options.Password.RequireLowercase = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = false;
+
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
             })
+            .AddErrorDescriber<DutchIdentityErrorDescriber>()
             .AddEntityFrameworkStores<BurgerShopDbContext>();
+
+            builder.Services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(jwtOptions =>
+            {
+                jwtOptions.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateActor = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = builder.Configuration["JWTConfiguration:Issuer"],
+                    ValidAudience = builder.Configuration["JWTConfiguration:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SigningKey"]))
+                };
+            });
+
+            builder.Services.AddScoped<IProductService<Product>, ProductService>();
+            builder.Services.AddScoped<IOrderService<Order>, OrderService>();
+            builder.Services.AddScoped<ICrudService<OrderItem>, OrderItemService>();
+            builder.Services.AddScoped<ICategoryService<Category>, CategoryService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(opt =>
+            {
+                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "BurgerShop API", Version = "v1" });
+                opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+
+                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+            });
 
             var app = builder.Build();
 
@@ -46,6 +109,7 @@ namespace BurgerShopOrdering.api
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
