@@ -4,9 +4,10 @@ namespace BurgerShopOrdering.api.Dtos.Accounts
 {
     public class LoginUserRequestDto
     {
-        [Required]
+        [Required(ErrorMessage = "E-mail is verplicht.")]
+        [EmailAddress(ErrorMessage = "Voer een geldig e-mailadres in.")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Wachtwoord is verplicht.")]
         public string Password { get; set; }
     }
 }
