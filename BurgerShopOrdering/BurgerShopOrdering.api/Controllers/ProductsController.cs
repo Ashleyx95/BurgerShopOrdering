@@ -92,7 +92,7 @@ namespace BurgerShopOrdering.api.Controllers
 
                 if (!category.Success || category.Data == null)
                 {
-                    return BadRequest(ApiResponse<object>.FailureResponse("Categorie niet gevonden.", category.Errors));
+                    return BadRequest(ApiResponse<object>.FailureResponse("Categorie werd niet gevonden.", category.Errors));
                 }
 
                 product.Categories.Add(category.Data);
@@ -127,7 +127,7 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (!productResult.Success || productResult.Data == null)
             {
-                return NotFound(ApiResponse<object>.FailureResponse("Product niet gevonden.", productResult.Errors));
+                return NotFound(ApiResponse<object>.FailureResponse("Product werd niet gevonden.", productResult.Errors));
             }
 
             var product = productResult.Data;
@@ -144,7 +144,7 @@ namespace BurgerShopOrdering.api.Controllers
 
                 if (!categoryResult.Success || categoryResult.Data == null)
                 {
-                    return BadRequest(ApiResponse<object>.FailureResponse("Categorie niet gevonden.", categoryResult.Errors));
+                    return BadRequest(ApiResponse<object>.FailureResponse("Categorie werd niet gevonden.", categoryResult.Errors));
                 }
 
                 categories.Add(categoryResult.Data);
@@ -159,7 +159,7 @@ namespace BurgerShopOrdering.api.Controllers
                 return Ok(ApiResponse<object>.SuccessResponse(null, $"Product '{productUpdateRequestDto.Name}' is geüpdatet"));
             }
 
-            return BadRequest(ApiResponse<object>.FailureResponse("Updaten van product mislukt.", result.Errors));
+            return BadRequest(ApiResponse<object>.FailureResponse("Updaten van product is niet gelukt.", result.Errors));
         }
 
         [HttpDelete("{id}")]
@@ -170,7 +170,7 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (!productResult.Success || productResult.Data == null)
             {
-                return NotFound(ApiResponse<object>.FailureResponse("Product niet gevonden.", productResult.Errors));
+                return NotFound(ApiResponse<object>.FailureResponse("Product werd niet gevonden.", productResult.Errors));
             }
 
             var product = productResult.Data;
@@ -182,7 +182,7 @@ namespace BurgerShopOrdering.api.Controllers
                 return Ok(ApiResponse<object>.SuccessResponse(null, $"Product '{productResult.Data.Name}' is verwijderd"));
             }
 
-            return BadRequest(ApiResponse<object>.FailureResponse("Verwijderen van product mislukt.", result.Errors));
+            return BadRequest(ApiResponse<object>.FailureResponse("Verwijderen van product is niet gelukt.", result.Errors));
         }
     }
 }
