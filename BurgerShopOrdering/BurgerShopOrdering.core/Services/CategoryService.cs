@@ -111,6 +111,7 @@ namespace BurgerShopOrdering.core.Services
                 if (await CategoryHasVisibleProducts(entity))
                 {
                     resultModel.Errors.Add("Er bevinden zich nog producten in deze categorie, verwijder deze eerst");
+                    return resultModel;
                 }
                 else
                 {

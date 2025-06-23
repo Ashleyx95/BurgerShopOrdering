@@ -95,6 +95,7 @@ namespace BurgerShopOrdering.core.Services
                     product.IsVisible = true;
                     product.Price = entity.Price;
                     product.Image = entity.Image;
+                    product.Categories = entity.Categories;
 
                     _burgerDbContext.Products.Update(product);
                     await _burgerDbContext.SaveChangesAsync();
