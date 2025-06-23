@@ -82,6 +82,12 @@ namespace BurgerShopOrdering.api.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(CategoryCreateRequestDto categoryCreateRequestDto)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(ApiResponse<object>.FailureResponse("Ongeldige invoer.", errors));
+            }
+
             var category = new Category(categoryCreateRequestDto.Name);
 
             var result = await _categoryService.AddAsync(category);
@@ -98,6 +104,12 @@ namespace BurgerShopOrdering.api.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(CategoryUpdateRequestDto categoryUpdateRequestDto)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(ApiResponse<object>.FailureResponse("Ongeldige invoer.", errors));
+            }
+
             var categoryResult = await _categoryService.GetByIdAsync(categoryUpdateRequestDto.Id);
 
             if (!categoryResult.Success || categoryResult.Data == null)
