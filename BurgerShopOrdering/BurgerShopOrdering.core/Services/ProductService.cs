@@ -93,6 +93,8 @@ namespace BurgerShopOrdering.core.Services
                 {
                     var product = await _burgerDbContext.Products.FirstAsync(p => p.Name == entity.Name);
                     product.IsVisible = true;
+                    product.Price = entity.Price;
+                    product.Image = entity.Image;
 
                     _burgerDbContext.Products.Update(product);
                     await _burgerDbContext.SaveChangesAsync();
