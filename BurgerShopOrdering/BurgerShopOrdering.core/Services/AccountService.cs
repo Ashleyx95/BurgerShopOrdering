@@ -29,7 +29,8 @@ namespace BurgerShopOrdering.core.Services
             var userClaims = await _userManager.GetClaimsAsync(user);
 
             claims.AddRange(userClaims);
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
 

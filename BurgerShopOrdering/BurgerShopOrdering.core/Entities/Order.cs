@@ -7,17 +7,35 @@ using System.Xml.Linq;
 
 namespace BurgerShopOrdering.core.Entities
 {
-    public class Order(Guid id, string applicationUserId, string name, decimal totalPrice, int quantity)
+    public class Order
     {
-        public Guid Id { get; set; } = id;
-        public string ApplicationUserId { get; set; } = applicationUserId;
+        public Guid Id { get; set; }
+        public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public string Name { get; set; } = name;
+        public string Name { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; } = [];
-        public decimal TotalPrice { get; set; } = totalPrice;
-        public int Quantity { get; set; } = quantity;
+        public decimal TotalPrice { get; set; }
+        public int Quantity { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.Besteld;
         public DateTime DateOrdered { get; set; } = DateTime.Now;
         public DateTime? DateDelivered { get; set; } = null;
+
+        //Constructor for seeding
+        public Order(Guid id, string applicationUserId, string name, decimal totalPrice, int quantity)
+        {
+            Id = id;
+            ApplicationUserId = applicationUserId;
+            Name = name;
+            TotalPrice = totalPrice;
+            Quantity = quantity;
+        }
+        public Order(string applicationUserId, string name, decimal totalPrice, int quantity)
+        {
+            Id = Guid.NewGuid();
+            ApplicationUserId = applicationUserId;
+            Name = name;
+            TotalPrice = totalPrice;
+            Quantity = quantity;
+        }
     }
 }
