@@ -16,11 +16,10 @@ using System.Threading.Tasks;
 
 namespace BurgerShopOrdering.core.Services
 {
-    public class AccountService(UserManager<ApplicationUser> userManager, IConfiguration configuration, BurgerShopDbContext burgerDbContext) : IAccountService
+    public class AccountService(UserManager<ApplicationUser> userManager, IConfiguration configuration) : IAccountService
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly IConfiguration _configuration = configuration;
-        private BurgerShopDbContext _burgerDbContext = burgerDbContext;
 
         public async Task<JwtSecurityToken> GenerateTokenAsync(ApplicationUser user)
         {
