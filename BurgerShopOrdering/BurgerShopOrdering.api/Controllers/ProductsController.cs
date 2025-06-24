@@ -90,7 +90,7 @@ namespace BurgerShopOrdering.api.Controllers
             {
                 var category = await _categoryService.GetByIdAsync(categoryId);
 
-                if (!category.Success || category.Data == null)
+                if (!category.Success || category.Data == null || !category.Data.IsVisible)
                 {
                     return BadRequest(ApiResponse<object>.FailureResponse("Categorie werd niet gevonden.", category.Errors));
                 }
@@ -142,7 +142,7 @@ namespace BurgerShopOrdering.api.Controllers
             {
                 var categoryResult = await _categoryService.GetByIdAsync(categoryId);
 
-                if (!categoryResult.Success || categoryResult.Data == null)
+                if (!categoryResult.Success || categoryResult.Data == null || !categoryResult.Data.IsVisible)
                 {
                     return BadRequest(ApiResponse<object>.FailureResponse("Categorie werd niet gevonden.", categoryResult.Errors));
                 }
