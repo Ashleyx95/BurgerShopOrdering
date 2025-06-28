@@ -59,6 +59,7 @@ namespace BurgerShopOrdering.test.Core.Services
             Assert.Contains("Er zijn geen beschikbare producten", result.Errors);
         }
         #endregion
+
         #region GetAllVisibleProducts Tests
         [Fact]
         public async Task GetAllVisibleProducts_WhenVisibleProductsExist_ReturnsVisibleProducts()
@@ -100,6 +101,7 @@ namespace BurgerShopOrdering.test.Core.Services
             Assert.Contains("Er zijn geen beschikbare producten", result.Errors);
         }
         #endregion
+
         #region GetByIdAsync Tests
         [Fact]
         public async Task GetByIdAsync_WhenProductFound_ReturnsProduct()
@@ -138,6 +140,7 @@ namespace BurgerShopOrdering.test.Core.Services
             Assert.Contains("Er is geen product met dit id", result.Errors);
         }
         #endregion
+
         #region AddAsync Tests
         [Fact]
         public async Task AddAsync_WhenProductNameExistsButNotVisible_MakesVisibleAndUpdatesPriceAndImage()
@@ -200,6 +203,7 @@ namespace BurgerShopOrdering.test.Core.Services
             Assert.Contains($"Er bestaat al een product met de naam {newProduct.Name}", result.Errors);
         }
         #endregion
+
         #region DeleteAsync Tests
         [Fact]
         public async Task DeleteAsync_WhenProductNotInOrderItems_RemovesProduct()
@@ -252,6 +256,7 @@ namespace BurgerShopOrdering.test.Core.Services
             Assert.False(productInDb.IsVisible);
         }
         #endregion
+
         #region UpdateAsync Tests
         [Fact]
         public async Task UpdateAsync_UpdatesProduct()

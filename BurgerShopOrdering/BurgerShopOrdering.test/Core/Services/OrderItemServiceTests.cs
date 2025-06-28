@@ -203,6 +203,7 @@ namespace BurgerShopOrdering.test.Core.Services
 
             // Assert
             Assert.NotNull(result);
+            Assert.NotNull(result.Data);
             Assert.Equal(10, result.Data.Quantity);
 
             var updated = await context.OrderItems.FindAsync(orderItem.Id);

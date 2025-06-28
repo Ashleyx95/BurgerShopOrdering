@@ -28,8 +28,8 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            context.Categories.Add(new Category("Vlees"));
-            context.Categories.Add(new Category("Groenten"));
+            context.Categories.Add(new Category("Burgers"));
+            context.Categories.Add(new Category("Sauces"));
             await context.SaveChangesAsync();
 
             var service = new CategoryService(context);
@@ -68,8 +68,8 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            context.Categories.Add(new Category("Vlees", true));
-            context.Categories.Add(new Category("Groenten", false));
+            context.Categories.Add(new Category("Burgers", true));
+            context.Categories.Add(new Category("Sauces", false));
             await context.SaveChangesAsync();
 
             var service = new CategoryService(context);
@@ -89,7 +89,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            context.Categories.Add(new Category("Vlees", false));
+            context.Categories.Add(new Category("Burgers", false));
             await context.SaveChangesAsync();
 
             var service = new CategoryService(context);
@@ -112,7 +112,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var category = new Category("Vlees");
+            var category = new Category("Burgers");
             context.Categories.Add(category);
             await context.SaveChangesAsync();
 
@@ -153,12 +153,12 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var existing = new Category("Vlees", false);
+            var existing = new Category("Burgers", false);
             context.Categories.Add(existing);
             await context.SaveChangesAsync();
 
             var service = new CategoryService(context);
-            var newCategory = new Category("Vlees");
+            var newCategory = new Category("Burgers");
 
             // Act
             var result = await service.AddAsync(newCategory);
@@ -175,7 +175,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var service = new CategoryService(context);
-            var newCategory = new Category("Vis");
+            var newCategory = new Category("Burgers");
 
             // Act
             var result = await service.AddAsync(newCategory);
@@ -183,7 +183,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Assert
             Assert.NotNull(result);
             Assert.NotNull(result.Data);
-            Assert.Equal("Vis", result.Data.Name);
+            Assert.Equal("Burgers", result.Data.Name);
             Assert.Empty(result.Errors);
         }
         [Fact]
@@ -191,11 +191,11 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            context.Categories.Add(new Category("Vlees", true));
+            context.Categories.Add(new Category("Burgers", true));
             await context.SaveChangesAsync();
 
             var service = new CategoryService(context);
-            var newCategory = new Category("Vlees");
+            var newCategory = new Category("Burgers");
 
             // Act
             var result = await service.AddAsync(newCategory);
@@ -204,6 +204,35 @@ namespace BurgerShopOrdering.test.Core.Services
             Assert.NotNull(result);
             Assert.Null(result.Data);
             Assert.Contains($"Er bestaat al een categorie met de naam {newCategory.Name}", result.Errors);
+        }
+
+        #endregion
+
+        #region UpdateAsync Tests
+
+        [Fact]
+        public async Task UpdateAsync_UpdatesCategory()
+        {
+            // Arrange
+            var context = GetInMemoryDbContext();
+            var category = new Category("Burgers");
+            context.Categories.Add(category);
+            await context.SaveChangesAsync();
+
+            var service = new CategoryService(context);
+
+            category.Name = "Vega";
+
+            // Act
+            var result = await service.UpdateAsync(category);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            Assert.Equal("Vega", result.Data.Name);
+
+            var updatedCategory = await context.Categories.FindAsync(category.Id);
+            Assert.Equal("Vega", updatedCategory.Name);
         }
 
         #endregion
@@ -234,11 +263,11 @@ namespace BurgerShopOrdering.test.Core.Services
         }
 
         [Fact]
-        public async Task DeleteAsync_WhenProductsInCategoryAndVisible_ReturnsError()
+        public async Task DeleteAsync_WhenVisibleProductsInCategory_ReturnsError()
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var category = new Category("Vlees", true);
+            var category = new Category("Burgers", true);
             context.Categories.Add(category);
             await context.SaveChangesAsync();
 
@@ -263,11 +292,11 @@ namespace BurgerShopOrdering.test.Core.Services
         }
 
         [Fact]
-        public async Task DeleteAsync_WhenProductsInCategoryButNotVisible_MakesInvisible()
+        public async Task DeleteAsync_WhenInvisibleProductsInCategory_MakesInvisible()
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var category = new Category("Vlees", true);
+            var category = new Category("Burgers", true);
             context.Categories.Add(category);
             await context.SaveChangesAsync();
 
@@ -294,33 +323,6 @@ namespace BurgerShopOrdering.test.Core.Services
 
         #endregion
 
-        #region UpdateAsync Tests
-
-        [Fact]
-        public async Task UpdateAsync_UpdatesCategory()
-        {
-            // Arrange
-            var context = GetInMemoryDbContext();
-            var category = new Category("Vlees");
-            context.Categories.Add(category);
-            await context.SaveChangesAsync();
-
-            var service = new CategoryService(context);
-
-            category.Name = "Vega";
-
-            // Act
-            var result = await service.UpdateAsync(category);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.NotNull(result.Data);
-            Assert.Equal("Vega", result.Data.Name);
-
-            var updatedCategory = await context.Categories.FindAsync(category.Id);
-            Assert.Equal("Vega", updatedCategory.Name);
-        }
-
-        #endregion
+        
     }
 }

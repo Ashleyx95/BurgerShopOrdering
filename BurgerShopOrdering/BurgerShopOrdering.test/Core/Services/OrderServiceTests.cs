@@ -179,6 +179,45 @@ namespace BurgerShopOrdering.test.Core.Services
         }
         #endregion
 
+        #region GetOrdersByUserAndStatusAsync
+        [Fact]
+        public async Task GetOrdersByUserAndStatusAsync_WhenOrdersExistForUserAndStatus_ReturnsOrders()
+        {
+            // Arrange
+            var context = GetInMemoryDbContext();
+            var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
+            var order = new Order(user.Id, "Order1", 10.0m, 2) { Status = OrderStatus.Afgehaald};
+            context.Users.Add(user);
+            context.Orders.Add(order);
+            await context.SaveChangesAsync();
+            var service = new OrderService(context);
+
+            // Act
+            var result = await service.GetOrdersByUserAndStatusAsync(user.Id, OrderStatus.Afgehaald);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            Assert.Single(result.Data);
+        }
+
+        [Fact]
+        public async Task GetOrdersByUserAndStatusAsync_WhenNoOrdersForUserAndStatus_ReturnsError()
+        {
+            // Arrange
+            var context = GetInMemoryDbContext();
+            var service = new OrderService(context);
+
+            // Act
+            var result = await service.GetOrdersByUserAndStatusAsync("nonexistent-user", OrderStatus.Afgehaald);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Null(result.Data);
+            Assert.Contains($"Er zijn geen bestellingen van deze gebruiker met status {OrderStatus.Afgehaald}", result.Errors);
+        }
+        #endregion
+
         #region AddAsync
         [Fact]
         public async Task AddAsync_AddsOrderSuccessfully()
