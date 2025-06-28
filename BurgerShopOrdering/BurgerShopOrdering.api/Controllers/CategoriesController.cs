@@ -43,7 +43,7 @@ namespace BurgerShopOrdering.api.Controllers
                     categoryResponseDtos.Add(categoryResponseDto);
                 }
 
-                return Ok(ApiResponse<List<CategoryResponseDto>>.SuccessResponse(categoryResponseDtos, "Categorieën opgehaald"));
+                return Ok(ApiResponse<List<CategoryResponseDto>>.SuccessResponse(categoryResponseDtos, "Categorieën opgehaald."));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Categorieën konden niet worden opgehaald.", result.Errors));
@@ -75,7 +75,7 @@ namespace BurgerShopOrdering.api.Controllers
                 }).ToList()
             };
 
-            return Ok(ApiResponse<CategoryResponseDto>.SuccessResponse(categoryResponseDto, "Categorie opgehaald"));
+            return Ok(ApiResponse<CategoryResponseDto>.SuccessResponse(categoryResponseDto, "Categorie werd opgehaald."));
         }
 
         [HttpPost]
@@ -149,7 +149,7 @@ namespace BurgerShopOrdering.api.Controllers
                 return Ok(ApiResponse<object>.SuccessResponse(null, $"Categorie '{category.Name}' is verwijderd"));
             }
 
-            return BadRequest(ApiResponse<object>.FailureResponse("Verwijderen van categorie iis niet gelukt.", result.Errors));
+            return BadRequest(ApiResponse<object>.FailureResponse("Verwijderen van categorie is niet gelukt.", result.Errors));
         }
     }
 }
