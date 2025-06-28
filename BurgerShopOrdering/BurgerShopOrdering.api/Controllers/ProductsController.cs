@@ -156,7 +156,7 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return Ok(ApiResponse<object>.SuccessResponse(null, $"Product '{productUpdateRequestDto.Name}' is geüpdatet"));
+                return Ok(ApiResponse<object>.SuccessResponse(null, $"Product '{productUpdateRequestDto.Name}' is geüpdatet."));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Updaten van product is niet gelukt.", result.Errors));
