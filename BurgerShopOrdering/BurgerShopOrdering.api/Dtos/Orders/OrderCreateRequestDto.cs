@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BurgerShopOrdering.core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace BurgerShopOrdering.api.Dtos.Orders
 {
@@ -13,6 +14,7 @@ namespace BurgerShopOrdering.api.Dtos.Orders
         [Range(0, int.MaxValue, ErrorMessage = "Totale hoeveelheid moet 0 of hoger zijn.")]
         public int TotalQuantity { get; set; }
         [Required(ErrorMessage = "Orderstatus is verplicht.")]
-        public string Status { get; set; }
+        [EnumDataType(typeof(OrderStatus), ErrorMessage = "Ongeldige orderstatus opgegeven.")]
+        public OrderStatus Status { get; set; }
     }
 }

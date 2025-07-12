@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BurgerShopOrdering.api.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BurgerShopOrdering.api
 {
@@ -20,6 +22,12 @@ namespace BurgerShopOrdering.api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             builder.Services.AddDbContext<BurgerShopDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -60,6 +68,7 @@ namespace BurgerShopOrdering.api
                 };
             });
 
+            builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, CustomAuthorizationMiddlewareResultHandler>();
             builder.Services.AddScoped<IProductService<Product>, ProductService>();
             builder.Services.AddScoped<IOrderService<Order>, OrderService>();
             builder.Services.AddScoped<ICrudService<OrderItem>, OrderItemService>();

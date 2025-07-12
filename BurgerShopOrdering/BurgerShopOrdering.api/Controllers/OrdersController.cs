@@ -201,7 +201,7 @@ namespace BurgerShopOrdering.api.Controllers
 
             string orderName = $"Bestelling {user.FirstName} {user.LastName} - {DateTime.Now:dd/MM/yy HH:mm}";
 
-            var order = new Order(userId, orderName, orderCreateRequestDto.TotalPrice, orderCreateRequestDto.TotalQuantity);
+            var order = new Order(userId, orderName, orderCreateRequestDto.TotalPrice, orderCreateRequestDto.TotalQuantity, orderCreateRequestDto.Status); 
 
             foreach (var item in orderCreateRequestDto.OrderItems)
             {
@@ -213,7 +213,28 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return CreatedAtAction(nameof(Get), new { id = order.Id }, ApiResponse<object>.SuccessResponse(null, "Bestelling is toegevoegd."));
+                var addedOrder = result.Data;
+                var orderResponseDto = new OrderResponseDto
+                {
+                    Id = addedOrder.Id,
+                    Name = addedOrder.Name,
+                    TotalPrice = addedOrder.TotalPrice,
+                    TotalQuantity = addedOrder.Quantity,
+                    NameUser = $"{addedOrder.ApplicationUser.FirstName} {addedOrder.ApplicationUser.LastName}",
+                    ApplicationUserId = addedOrder.ApplicationUserId,
+                    Status = addedOrder.Status.ToString(),
+                    DateOrdered = addedOrder.DateOrdered,
+                    DateDelivered = addedOrder.DateDelivered,
+                    OrderItems = addedOrder.OrderItems.Select(oi => new OrderItemResponseDto
+                    {
+                        Id = oi.Id,
+                        ProductName = oi.Product.Name,
+                        Price = oi.Price,
+                        Quantity = oi.Quantity,
+                    }).ToList()
+                };
+
+                return CreatedAtAction(nameof(Get), new { id = order.Id }, ApiResponse<OrderResponseDto>.SuccessResponse(orderResponseDto, "Bestelling is toegevoegd."));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Bestelling kon niet worden toegevoegd.", result.Errors));
@@ -248,7 +269,28 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return Ok(ApiResponse<object>.SuccessResponse(null, "Bestelling werd geüpdatet."));
+                var updatedOrder = result.Data;
+                var orderResponseDto = new OrderResponseDto
+                {
+                    Id = updatedOrder.Id,
+                    Name = updatedOrder.Name,
+                    TotalPrice = updatedOrder.TotalPrice,
+                    TotalQuantity = updatedOrder.Quantity,
+                    NameUser = $"{updatedOrder.ApplicationUser.FirstName} {updatedOrder.ApplicationUser.LastName}",
+                    ApplicationUserId = updatedOrder.ApplicationUserId,
+                    Status = updatedOrder.Status.ToString(),
+                    DateOrdered = updatedOrder.DateOrdered,
+                    DateDelivered = updatedOrder.DateDelivered,
+                    OrderItems = updatedOrder.OrderItems.Select(oi => new OrderItemResponseDto
+                    {
+                        Id = oi.Id,
+                        ProductName = oi.Product.Name,
+                        Price = oi.Price,
+                        Quantity = oi.Quantity,
+                    }).ToList()
+                };
+
+                return Ok(ApiResponse<OrderResponseDto>.SuccessResponse(orderResponseDto, "Bestelling werd geüpdatet."));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Updaten van bestelling is niet gelukt.", result.Errors));

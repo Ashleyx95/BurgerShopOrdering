@@ -102,7 +102,16 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return CreatedAtAction(nameof(Get), new { id = product.Id }, ApiResponse<object>.SuccessResponse(null, $"Product '{product.Name}' is toegevoegd."));
+                var productResponseDto = new ProductResponseDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Image = product.Image,
+                    Price = product.Price,
+                    Categories = product.Categories.Select(c => c.Name).ToList(),
+                };
+
+                return CreatedAtAction(nameof(Get), new { id = product.Id }, ApiResponse<ProductResponseDto>.SuccessResponse(productResponseDto, $"Product '{product.Name}' is toegevoegd."));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Product kon niet worden toegevoegd.", result.Errors));
@@ -156,7 +165,16 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return Ok(ApiResponse<object>.SuccessResponse(null, $"Product '{productUpdateRequestDto.Name}' is geüpdatet."));
+                var productResponseDto = new ProductResponseDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Image = product.Image,
+                    Price = product.Price,
+                    Categories = product.Categories.Select(c => c.Name).ToList(),
+                };
+
+                return Ok(ApiResponse<ProductResponseDto>.SuccessResponse(productResponseDto, $"Product '{productUpdateRequestDto.Name}' is geüpdatet."));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Updaten van product is niet gelukt.", result.Errors));

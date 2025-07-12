@@ -94,7 +94,14 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return CreatedAtAction(nameof(Get), new { id = category.Id }, ApiResponse<object>.SuccessResponse(null, $"Categorie '{categoryCreateRequestDto.Name}' is toegevoegd"));
+                var categoryResponseDto = new CategoryResponseDto
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    Products = [] 
+                };
+
+                return CreatedAtAction(nameof(Get), new { id = category.Id }, ApiResponse<CategoryResponseDto>.SuccessResponse(categoryResponseDto, $"Categorie '{categoryCreateRequestDto.Name}' is toegevoegd"));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Categorie kon niet worden toegevoegd.", result.Errors));
@@ -124,7 +131,21 @@ namespace BurgerShopOrdering.api.Controllers
 
             if (result.Success)
             {
-                return Ok(ApiResponse<object>.SuccessResponse(null, $"Categorie '{categoryUpdateRequestDto.Name}' is geüpdatet"));
+                var categoryResponseDto = new CategoryResponseDto
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    Products = category.Products.Select(p => new ProductResponseDto
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                        Image = p.Image,
+                        Categories = p.Categories.Select(c => c.Name).ToList()
+                    }).ToList()
+                };
+
+                return Ok(ApiResponse<CategoryResponseDto>.SuccessResponse(categoryResponseDto, $"Categorie '{categoryUpdateRequestDto.Name}' is geüpdatet"));
             }
 
             return BadRequest(ApiResponse<object>.FailureResponse("Updaten van categorie is niet gelukt.", result.Errors));

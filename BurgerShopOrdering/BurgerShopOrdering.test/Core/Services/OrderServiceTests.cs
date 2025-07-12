@@ -28,7 +28,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Order1", 10.0m, 2);
+            var order = new Order(user.Id, "Order1", 10.0m, 2, null);
             context.Users.Add(user);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
@@ -69,7 +69,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Order1", 10.0m, 2);
+            var order = new Order(user.Id, "Order1", 10.0m, 2, null);
             context.Users.Add(user);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
@@ -108,7 +108,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Order1", 10.0m, 2) { Status = OrderStatus.Besteld };
+            var order = new Order(user.Id, "Order1", 10.0m, 2, OrderStatus.Besteld);
             context.Users.Add(user);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
@@ -147,7 +147,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Order1", 10.0m, 2);
+            var order = new Order(user.Id, "Order1", 10.0m, 2, null);
             context.Users.Add(user);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
@@ -186,7 +186,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Order1", 10.0m, 2) { Status = OrderStatus.Afgehaald};
+            var order = new Order(user.Id, "Order1", 10.0m, 2, OrderStatus.Afgehaald);
             context.Users.Add(user);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
@@ -224,7 +224,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Order1", 10.0m, 2);
+            var order = new Order("user1", "Order1", 10.0m, 2, null);
             var service = new OrderService(context);
 
             // Act
@@ -243,7 +243,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Order1", 10.0m, 2);
+            var order = new Order("user1", "Order1", 10.0m, 2, null);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
             var service = new OrderService(context);
@@ -265,7 +265,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Order1", 10.0m, 2);
+            var order = new Order("user1", "Order1", 10.0m, 2, null);
             context.Orders.Add(order);
             await context.SaveChangesAsync();
             var service = new OrderService(context);
@@ -284,7 +284,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Order1", 10.0m, 2);
+            var order = new Order("user1", "Order1", 10.0m, 2, null);
             var product = new Product("Burger", 5.0m);
             var orderItem = new OrderItem(order.Id, product.Id, 2, 5.0m);
 

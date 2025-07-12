@@ -78,7 +78,7 @@ namespace BurgerShopOrdering.test.API
 
             SetUserAsClient(user.Id);
 
-            var order = new Order(user.Id, "Order1", 90, 2) { ApplicationUser = user};
+            var order = new Order(user.Id, "Order1", 90, 2, null) { ApplicationUser = user};
             var product1 = new Product("Burger", 50);
             var product2 = new Product("Sauce", 40);
 
@@ -113,7 +113,7 @@ namespace BurgerShopOrdering.test.API
 
             var client = new ApplicationUser("test", "person", "testperson@hotmail.com");
 
-            var order = new Order(client.Id, "Order1", 90, 2) { ApplicationUser = client };
+            var order = new Order(client.Id, "Order1", 90, 2, null) { ApplicationUser = client };
             var product1 = new Product("Burger", 50);
             var product2 = new Product("Sauce", 40);
 
@@ -166,7 +166,7 @@ namespace BurgerShopOrdering.test.API
 
             SetUserAsClient(user.Id);
 
-            var order = new Order(user.Id, "Order1", 90, 2) { ApplicationUser = user };
+            var order = new Order(user.Id, "Order1", 90, 2, null) { ApplicationUser = user };
             var product1 = new Product("Burger", 50);
             var product2 = new Product("Sauce", 40);
 
@@ -218,7 +218,7 @@ namespace BurgerShopOrdering.test.API
             // Arrange
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
 
-            var order = new Order(user.Id, "Order1", 100, 2);
+            var order = new Order(user.Id, "Order1", 100, 2, null);
 
             _orderServiceMock.Setup(s => s.GetByIdAsync(order.Id))
                 .ReturnsAsync(new ResultModel<Order> { Data = order });
@@ -238,7 +238,7 @@ namespace BurgerShopOrdering.test.API
 
             var client = new ApplicationUser("test", "person", "testperson@hotmail.com");
 
-            var order = new Order(client.Id, "Order1", 90, 2) { ApplicationUser = client, Status = OrderStatus.Afgehaald };
+            var order = new Order(client.Id, "Order1", 90, 2, OrderStatus.Afgehaald) { ApplicationUser = client };
             var product1 = new Product("Burger", 50);
             var product2 = new Product("Sauce", 40);
 
@@ -271,7 +271,7 @@ namespace BurgerShopOrdering.test.API
 
             SetUserAsClient(user.Id);
 
-            var order = new Order(user.Id, "Order1", 90, 2) { ApplicationUser = user, Status = OrderStatus.Afgehaald };
+            var order = new Order(user.Id, "Order1", 90, 2, OrderStatus.Afgehaald) { ApplicationUser = user};
             var product1 = new Product("Burger", 50);
             var product2 = new Product("Sauce", 40);
 
@@ -337,32 +337,39 @@ namespace BurgerShopOrdering.test.API
         public async Task Add_WhenOrderAdded_ReturnsCreated()
         {
             // Arrange
+            var product = new Product("Burger", 50);
+            var orderItemQuantity = 2;
+            var orderItemPrice = 50;
+
+            var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
+            SetUserAsClient(user.Id);
+
             var dto = new OrderCreateRequestDto
             {
                 TotalPrice = 100,
                 TotalQuantity = 2,
                 OrderItems = new List<OrderItemCreateRequestDto>
                 {
-                    new OrderItemCreateRequestDto { ProductId = Guid.NewGuid(), Price = 50, Quantity = 1 }
+                    new OrderItemCreateRequestDto { ProductId = product.Id, Price = orderItemPrice, Quantity = orderItemQuantity }
                 }
             };
 
-            var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-
-            SetUserAsClient(user.Id);
+            var order = new Order(user.Id, "Bestelling Test", dto.TotalPrice, dto.TotalQuantity, OrderStatus.Besteld) { ApplicationUser = user };
+            order.OrderItems = new List<OrderItem> { new OrderItem(order.Id, product.Id, orderItemQuantity, orderItemPrice) { Product = product } };
 
             _userManagerMock.Setup(um => um.FindByIdAsync(user.Id))
                 .ReturnsAsync(user);
 
             _orderServiceMock.Setup(s => s.AddAsync(It.IsAny<Order>()))
-                .ReturnsAsync(new ResultModel<Order> { });
+                .ReturnsAsync(new ResultModel<Order> { Data = order });
 
             // Act
             var result = await _controller.Add(dto);
 
             // Assert
             var createdAtAction = Assert.IsType<CreatedAtActionResult>(result);
-            var apiResponse = Assert.IsType<ApiResponse<object>>(createdAtAction.Value);
+            var apiResponse = Assert.IsType<ApiResponse<OrderResponseDto>>(createdAtAction.Value);
+            Assert.NotNull(apiResponse.Data);
             Assert.True(apiResponse.Success);
             Assert.Empty(apiResponse.Errors);
             Assert.Equal("Bestelling is toegevoegd.", apiResponse.Message);
@@ -457,7 +464,14 @@ namespace BurgerShopOrdering.test.API
         public async Task Update_WhenUpdateSucceeds_ReturnsOk()
         {
             // Arrange
-            var order = new Order("UserId", "Order1", 50, 2) { Status = OrderStatus.Besteld };
+            var product = new Product("Burger", 50);
+
+            var client = new ApplicationUser("test", "person", "testperson@hotmail.com");
+            SetUserAsAdmin();
+
+            var order = new Order(client.Id, "Bestelling Test", 100, 2, OrderStatus.Besteld) { ApplicationUser = client};
+            var orderItem = new OrderItem(order.Id, product.Id, 2, 50) { Product = product};
+            order.OrderItems.Add(orderItem);
 
             var dto = new OrderUpdateRequestDto { Id = order.Id, Status = OrderStatus.Afgehaald };
 
@@ -472,7 +486,7 @@ namespace BurgerShopOrdering.test.API
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var apiResponse = Assert.IsType<ApiResponse<object>>(okResult.Value);
+            var apiResponse = Assert.IsType<ApiResponse<OrderResponseDto>>(okResult.Value);
             Assert.True(apiResponse.Success);
             Assert.Empty(apiResponse.Errors);
             Assert.Equal("Bestelling werd geüpdatet.", apiResponse.Message);
@@ -521,7 +535,7 @@ namespace BurgerShopOrdering.test.API
         public async Task Update_WhenOrderServiceReturnsErrors_ReturnsBadRequest()
         {
             // Arrange
-            var order = new Order("UserId", "Order1", 50, 2) { Status = OrderStatus.Besteld };
+            var order = new Order("UserId", "Order1", 50, 2, OrderStatus.Besteld);
 
             var dto = new OrderUpdateRequestDto { Id = order.Id, Status = OrderStatus.Afgehaald };
 
@@ -552,7 +566,7 @@ namespace BurgerShopOrdering.test.API
             // Arrange
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
 
-            var order = new Order(user.Id, "Order1", 90, 2);
+            var order = new Order(user.Id, "Order1", 90, 2, null);
 
             _orderServiceMock.Setup(s => s.GetByIdAsync(order.Id))
                 .ReturnsAsync(new ResultModel<Order> { Data = order });
@@ -600,7 +614,7 @@ namespace BurgerShopOrdering.test.API
             // Arrange
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
 
-            var order = new Order(user.Id, "Order1", 90, 2);
+            var order = new Order(user.Id, "Order1", 90, 2, null);
 
             _orderServiceMock.Setup(s => s.GetByIdAsync(order.Id))
                 .ReturnsAsync(new ResultModel<Order> { Data = order });

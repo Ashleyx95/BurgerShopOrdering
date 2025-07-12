@@ -135,7 +135,8 @@ namespace BurgerShopOrdering.test.API
 
             // Assert
             var createdResult = Assert.IsType<CreatedAtActionResult>(result);
-            var apiResponse = Assert.IsType<ApiResponse<object>>(createdResult.Value);
+            var apiResponse = Assert.IsType<ApiResponse<ProductResponseDto>>(createdResult.Value);
+            Assert.NotNull(apiResponse.Data);
             Assert.True(apiResponse.Success);
             Assert.Empty(apiResponse.Errors);
             Assert.Equal($"Product '{dto.Name}' is toegevoegd.", apiResponse.Message);
@@ -263,7 +264,8 @@ namespace BurgerShopOrdering.test.API
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var apiResponse = Assert.IsType<ApiResponse<object>>(okResult.Value);
+            var apiResponse = Assert.IsType<ApiResponse<ProductResponseDto>>(okResult.Value);
+            Assert.NotNull(apiResponse.Data);
             Assert.Empty(apiResponse.Errors);
             Assert.Equal($"Product '{dto.Name}' is geüpdatet.", apiResponse.Message);
         }

@@ -29,13 +29,14 @@ namespace BurgerShopOrdering.core.Entities
             TotalPrice = totalPrice;
             Quantity = quantity;
         }
-        public Order(string applicationUserId, string name, decimal totalPrice, int quantity)
+        public Order(string applicationUserId, string name, decimal totalPrice, int quantity, OrderStatus? orderStatus)
         {
             Id = Guid.NewGuid();
             ApplicationUserId = applicationUserId;
             Name = name;
             TotalPrice = totalPrice;
             Quantity = quantity;
+            Status = orderStatus ?? OrderStatus.Besteld;
         }
     }
 }

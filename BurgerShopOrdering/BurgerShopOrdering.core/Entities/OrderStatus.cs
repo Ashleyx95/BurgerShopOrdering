@@ -8,9 +8,9 @@ namespace BurgerShopOrdering.core.Entities
 {
     public enum OrderStatus
     {
-        Besteld,
-        Bereiden,
-        Klaar,
-        Afgehaald
+        Besteld = 0,
+        Bereiden = 1,
+        Klaar = 2,
+        Afgehaald = 3
     }
 }

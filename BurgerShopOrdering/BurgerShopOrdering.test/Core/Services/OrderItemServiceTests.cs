@@ -29,7 +29,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Bestelling test", 10.0m, 2);
+            var order = new Order(user.Id, "Bestelling test", 10.0m, 2, null);
             var product = new Product("Burger", 5.0m);
             var orderItem = new OrderItem(order.Id, product.Id, 2, 5.0m);
 
@@ -78,7 +78,7 @@ namespace BurgerShopOrdering.test.Core.Services
             // Arrange
             var context = GetInMemoryDbContext();
             var user = new ApplicationUser("test", "person", "testperson@hotmail.com");
-            var order = new Order(user.Id, "Bestelling test", 10.0m, 2);
+            var order = new Order(user.Id, "Bestelling test", 10.0m, 2, null);
             var product = new Product("Burger", 5.0m);
             var orderItem = new OrderItem(order.Id, product.Id, 2, 5.0m);
 
@@ -124,7 +124,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Bestelling test", 10.0m, 2);
+            var order = new Order("user1", "Bestelling test", 10.0m, 2, null);
             var product = new Product("Burger", 5.0m);
 
             context.Orders.Add(order);
@@ -154,7 +154,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Bestelling test", 10.0m, 2);
+            var order = new Order("user1", "Bestelling test", 10.0m, 2, null);
             var product = new Product("Burger", 5.0m);
             var orderItem = new OrderItem(order.Id, product.Id, 2, 5.0m);
 
@@ -185,7 +185,7 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Bestelling test", 10.0m, 2);
+            var order = new Order("user1", "Bestelling test", 10.0m, 2, null);
             var product = new Product("Burger", 5.0m);
             var orderItem = new OrderItem(order.Id, product.Id, 2, 5.0m);
 

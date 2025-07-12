@@ -136,7 +136,8 @@ namespace BurgerShopOrdering.core.Services
 
             _burgerDbContext.Orders.Add(entity);
             await _burgerDbContext.SaveChangesAsync();
-            resultModel.Data = entity;
+
+            resultModel.Data = GetByIdAsync(entity.Id).Result.Data;
 
             return resultModel;
         }
@@ -164,7 +165,7 @@ namespace BurgerShopOrdering.core.Services
             _burgerDbContext.Orders.Update(entity);
             await _burgerDbContext.SaveChangesAsync();
 
-            resultModel.Data = entity;
+            resultModel.Data = GetByIdAsync(entity.Id).Result.Data;
 
             return resultModel;
         }
