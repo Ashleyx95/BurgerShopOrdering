@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>BurgerShopOrdering</ApplicationTitle>
+		<ApplicationTitle>Ashley's Fritje</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.burgershopordering</ApplicationId>
@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\icon.png" Color="#FCFAEF" ForegroundScale="0.65" BaseSize="120,120" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\appsplash.png" Color="#FCFAEF" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -58,6 +58,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Images\defaultproduct.jpg" />
 	  <None Remove="Resources\Images\frietenheader.png" />
 	</ItemGroup>
 
