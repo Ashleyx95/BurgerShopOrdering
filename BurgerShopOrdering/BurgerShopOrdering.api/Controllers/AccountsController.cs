@@ -88,9 +88,20 @@ namespace BurgerShopOrdering.api.Controllers
             JwtSecurityToken token = await _accountService.GenerateTokenAsync(user);
             string serializedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
+            var roles = await _userManager.GetRolesAsync(user);
+
             var loginResponse = new LoginUserResponseDto
             {
-                Token = serializedToken
+                Token = serializedToken,
+                User = new UserResponseDto
+                {
+                    Id = user.Id,
+                    Firstname = user.FirstName,
+                    Lastname = user.LastName,
+                    Email = user.Email,
+                    IsAdmin = roles.Contains("Admin"),
+                    IsClient = roles.Contains("Client")
+                }
             };
 
             return Ok(ApiResponse<LoginUserResponseDto>.SuccessResponse(loginResponse, "Login succesvol"));

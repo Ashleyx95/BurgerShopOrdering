@@ -1,4 +1,7 @@
 ﻿using BurgerShopOrdering.Core.Models;
+using BurgerShopOrdering.Pages;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using Newtonsoft.Json;
 
 namespace BurgerShopOrdering
@@ -9,6 +12,7 @@ namespace BurgerShopOrdering
         {
             InitializeComponent();
             InitializeAsync();
+            Routing.RegisterRoute("LoginPage", typeof(LoginPage));
         }
 
         private async Task InitializeAsync()

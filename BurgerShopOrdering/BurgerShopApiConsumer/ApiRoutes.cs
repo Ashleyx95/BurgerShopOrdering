@@ -8,7 +8,7 @@ namespace BurgerShopApiConsumer
 {
     public class ApiRoutes
     {
-        public const string Base = "https://8d6dgmc8-7070.euw.devtunnels.ms/api";
+        public const string Base = "https://hzfwnqgj-7070.euw.devtunnels.ms/api";
         public const string Products = Base + "/products/";
         public const string Categories = Base + "/categories/";
         public const string Orders = Base + "/orders/";

@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BurgerShopApiConsumer.Users;
+using BurgerShopOrdering.Core.Services.Interfaces;
+using BurgerShopOrdering.Core.Services.Web;
+using BurgerShopOrdering.Pages;
+using BurgerShopOrdering.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace BurgerShopOrdering
 {
@@ -19,6 +24,18 @@ namespace BurgerShopOrdering
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<IAccountService, AccountService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
+
+            builder.Services.AddHttpClient();
+            builder.Services.AddScoped<IUserApiService, UserApiService>();
+
+            builder.Services.AddTransient<AccountViewModel>();
+            builder.Services.AddTransient<AccountPage>();
+            builder.Services.AddTransient<HomeAdminPage>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<LoginPage>();
 
             return builder.Build();
         }
