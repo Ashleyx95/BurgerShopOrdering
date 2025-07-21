@@ -90,6 +90,21 @@ namespace BurgerShopOrdering.Core.Services.Web
 
             return success;
         }
+        public async Task<ResultModel> TryRegisterAsync(string firstname, string lastname, string email, string password, string confirmPassword)
+        {
+            var userToRegister = new UserRegisterRequestApiModel
+            {
+                Email = email,
+                Password = password,
+                ConfirmPassword = confirmPassword,
+                FirstName = firstname,
+                LastName = lastname,
+            };
+
+            var response = await _userApiService.RegisterAsync(userToRegister);
+
+            return new ResultModel { Success = response.Success, Message = response.Message, Errors = response.Errors };
+        }
         private async Task StoreToken(string token)
         {
             await SecureStorage.Default.SetAsync(TokenKey, token);

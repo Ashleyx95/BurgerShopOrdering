@@ -13,6 +13,7 @@ namespace BurgerShopOrdering
             InitializeComponent();
             InitializeAsync();
             Routing.RegisterRoute("LoginPage", typeof(LoginPage));
+            Routing.RegisterRoute("RegistrationPage", typeof(RegistrationPage));
         }
 
         private async Task InitializeAsync()
@@ -31,6 +32,11 @@ namespace BurgerShopOrdering
             }
 
             var user = JsonConvert.DeserializeObject<User>(userJson);
+
+            if (user == null)
+            {
+                return "";
+            }
 
             if (user.IsAdmin)
             {

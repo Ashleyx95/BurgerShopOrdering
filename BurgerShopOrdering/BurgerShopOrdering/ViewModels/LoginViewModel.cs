@@ -36,6 +36,7 @@ namespace BurgerShopOrdering.ViewModels
         }
 
         public ICommand OnLoginClickedCommand => new Command(async () => await TryLoginAsync());
+        public ICommand OnRegistrationLinkClickedCommand => new Command(async () => await Shell.Current.GoToAsync("RegistrationPage"));
 
         private async Task TryLoginAsync()
         {
