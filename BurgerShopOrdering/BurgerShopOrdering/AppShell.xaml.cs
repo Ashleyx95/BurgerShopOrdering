@@ -14,6 +14,7 @@ namespace BurgerShopOrdering
             InitializeAsync();
             Routing.RegisterRoute("LoginPage", typeof(LoginPage));
             Routing.RegisterRoute("RegistrationPage", typeof(RegistrationPage));
+            Routing.RegisterRoute("OrderPlacedPage", typeof(OrderPlacedPage));
         }
 
         private async Task InitializeAsync()
