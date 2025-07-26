@@ -1,4 +1,5 @@
 ﻿using BurgerShopApiConsumer.Categories;
+using BurgerShopApiConsumer.Orders;
 using BurgerShopApiConsumer.Products;
 using BurgerShopApiConsumer.Users;
 using BurgerShopOrdering.Core.Services.Interfaces;
@@ -35,6 +36,7 @@ namespace BurgerShopOrdering
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IProductApiService, ProductApiService>();
             builder.Services.AddScoped<ICategoryApiService, CategoryApiService>();
+            builder.Services.AddScoped<IOrderApiService, OrderApiService>();
 
             builder.Services.AddTransient<AccountViewModel>();
             builder.Services.AddTransient<AccountPage>();
@@ -47,6 +49,8 @@ namespace BurgerShopOrdering
             builder.Services.AddTransient<MenuPage>();
             builder.Services.AddTransient<BaseMenuViewModel>();
             builder.Services.AddTransient<MenuViewModel>();
+            builder.Services.AddTransient<ShoppingCartPage>();
+            builder.Services.AddTransient<ShoppingCartViewModel>();
 
             return builder.Build();
         }

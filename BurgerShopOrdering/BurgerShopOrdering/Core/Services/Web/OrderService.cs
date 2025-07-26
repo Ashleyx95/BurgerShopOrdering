@@ -1,4 +1,5 @@
 ﻿using BurgerShopApiConsumer.Orders;
+using BurgerShopApiConsumer.Orders.Model;
 using BurgerShopOrdering.Core.Models;
 using BurgerShopOrdering.Core.Services.Interfaces;
 using Newtonsoft.Json;
@@ -12,6 +13,35 @@ namespace BurgerShopOrdering.Core.Services.Web
 {
     public class OrderService : IOrderService
     {
+        private readonly IOrderApiService _orderApiService;
+        private readonly IAccountService _accountService;
+
+        public OrderService(IOrderApiService orderApiService, IAccountService accountService)
+        {
+            _orderApiService = orderApiService;
+            _accountService = accountService;
+        }
+        public async Task<ResultModel> CreateOrderAsync(Order order)
+        {
+            var user = await _accountService.GetLoggedInUserAsync();
+
+            var newOrder = new OrderCreateRequestApiModel
+            {
+                TotalPrice = order.TotalPrice,
+                TotalQuantity = order.TotalQuantity,
+                Status = BurgerShopApiConsumer.Orders.Model.OrderStatus.Besteld,
+                OrderItems = order.OrderItems.Select(oi => new OrderItemCreateRequestApiModel
+                {
+                    Price = oi.ProductPrice,
+                    Quantity = oi.Quantity,
+                    ProductId = oi.ProductId,
+                }).ToList(),
+            };
+
+            var result = await _orderApiService.CreateOrderAsync(newOrder, await _accountService.GetTokenAsync());
+
+            return new ResultModel { Success = result.Success, Message = result.Message, Errors = result.Errors };
+        }
         public int CalculateTotalItemsInOrder(Order order)
         {
             int totalItems = 0;

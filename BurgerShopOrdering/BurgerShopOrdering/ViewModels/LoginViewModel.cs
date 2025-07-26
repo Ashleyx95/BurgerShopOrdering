@@ -77,7 +77,7 @@ namespace BurgerShopOrdering.ViewModels
                     else
                     {
                         await Shell.Current.GoToAsync("..");
-                        await Shell.Current.GoToAsync(lastPage);
+                        await Shell.Current.GoToAsync($"//{lastPage}");
                     }
                     Preferences.Remove("LastPage");
                 }
