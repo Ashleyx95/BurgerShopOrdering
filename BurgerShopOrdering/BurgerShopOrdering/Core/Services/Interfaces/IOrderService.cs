@@ -9,6 +9,8 @@ namespace BurgerShopOrdering.Core.Services.Interfaces
 {
     public interface IOrderService
     {
+        Task<ICollection<Order>> GetOrdersAsync();
+        Task<ICollection<Order>> GetOrdersByStatusAsync(string status);
         Task<ResultModel> CreateOrderAsync(Order order);
         decimal CalculateTotalPriceOrderItem(decimal price, int quantity);
         decimal CalculateTotalPriceOrder(Order order);

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrderStatus = BurgerShopOrdering.Core.Models.OrderStatus;
 
 namespace BurgerShopOrdering.Core.Services.Web
 {
@@ -20,6 +21,18 @@ namespace BurgerShopOrdering.Core.Services.Web
         {
             _orderApiService = orderApiService;
             _accountService = accountService;
+        }
+        public async Task<ICollection<Order>> GetOrdersAsync()
+        {
+            var result = await _orderApiService.GetOrdersAsync(await _accountService.GetTokenAsync());
+
+            return result.Success && result.Data != null? MapOrders(result.Data) : [];
+        }
+        public async Task<ICollection<Order>> GetOrdersByStatusAsync(string status)
+        {
+            var result = await _orderApiService.GetOrdersByStatusAsync(status, await _accountService.GetTokenAsync());
+
+            return result.Success && result.Data != null ? MapOrders(result.Data) : [];
         }
         public async Task<ResultModel> CreateOrderAsync(Order order)
         {
@@ -97,6 +110,36 @@ namespace BurgerShopOrdering.Core.Services.Web
             }
 
             return order;
+        }
+        private List<Order> MapOrders(IEnumerable<OrderResponseApiModel> responseOrders)
+        {
+            var orders = new List<Order>();
+
+            foreach (var o in responseOrders.OrderByDescending(o => o.DateOrdered))
+            {
+                var order = new Order
+                {
+                    Id = o.Id,
+                    Name = o.Name,
+                    TotalPrice = o.TotalPrice,
+                    TotalQuantity = o.TotalQuantity,
+                    DateOrdered = o.DateOrdered,
+                    NameUser = o.NameUser,
+                    Status = Enum.Parse<OrderStatus>(o.Status),
+                    DateDelivered = o.DateDelivered,
+                    OrderItems = o.OrderItems.Select(oi => new OrderItem
+                    {
+                        ProductName = oi.ProductName,
+                        ProductPrice = oi.Price,
+                        Quantity = oi.Quantity,
+                        TotalPrice = CalculateTotalPriceOrderItem(oi.Price, oi.Quantity)
+                    }).ToList()
+                };
+
+                orders.Add(order);
+            }
+
+            return orders;
         }
     }
 }

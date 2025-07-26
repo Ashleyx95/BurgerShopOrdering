@@ -101,7 +101,7 @@ namespace BurgerShopOrdering.ViewModels
                 if (result.Success)
                 {
                     _orderService.RemoveOrderFromStorage(Order);
-                    //await Shell.Current.GoToAsync("OrderPlacedPage");
+                    await Shell.Current.GoToAsync("OrderPlacedPage");
                     return;
                 }
                 else
