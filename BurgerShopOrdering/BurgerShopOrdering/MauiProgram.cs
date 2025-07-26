@@ -48,8 +48,10 @@ namespace BurgerShopOrdering
             builder.Services.AddTransient<RegistrationPage>();
             builder.Services.AddTransient<RegistrationViewModel>();
             builder.Services.AddTransient<MenuPage>();
+            builder.Services.AddTransient<MenuAdminPage>();
             builder.Services.AddTransient<BaseMenuViewModel>();
             builder.Services.AddTransient<MenuViewModel>();
+            builder.Services.AddTransient<MenuAdminViewModel>();
             builder.Services.AddTransient<ShoppingCartPage>();
             builder.Services.AddTransient<ShoppingCartViewModel>();
             builder.Services.AddTransient<OrdersPage>();
