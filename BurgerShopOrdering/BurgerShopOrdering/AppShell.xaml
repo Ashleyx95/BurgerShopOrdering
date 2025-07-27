@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BurgerShopOrdering.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:BurgerShopOrdering.Pages"
+    Shell.FlyoutBehavior="Disabled"
+    Title="BurgerShopOrdering"
+    Shell.TabBarBackgroundColor="#B83C3C"
+    Shell.TabBarForegroundColor="#B8A48D"
+    Shell.TabBarUnselectedColor="#FCFAEF">
+
+    <!-- TabBar for non-loggedIn and client users-->
+    <TabBar x:Name="ClientTabBar">
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe88a;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:HomePage}" Route="HomePage" />
+
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe57a;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:MenuPage}" Route="MenuPage"/>
+
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe8cc;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:ShoppingCartPage}" Route="ShoppingCartPage" />
+
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe853;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:AccountPage}" Route="AccountPage"/>
+
+    </TabBar>
+
+    <!-- TabBar for Admin -->
+    <TabBar x:Name="AdminTabBar" IsVisible="False">
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe88a;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:HomeAdminPage}" Route="HomeAdminPage" />
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe57a;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:MenuAdminPage}" Route="MenuAdminPage"/>
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe85d;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:OrdersPage}" Route="OrdersPage"/>
+        <ShellContent
+        Icon="{FontImageSource Glyph=&#xe853;, FontFamily=MaterialIcons}"
+        ContentTemplate="{DataTemplate pages:AccountPage}" Route="AccountPage"/>
+    </TabBar>
+
+</Shell>

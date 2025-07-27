@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BurgerShopOrdering.Pages.OrderPage"
+             xmlns:viewmodels="clr-namespace:BurgerShopOrdering.ViewModels"
+             xmlns:models="clr-namespace:BurgerShopOrdering.Core.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodels:OrderViewModel"
+             Title="Order"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="#FCFAEF">
+            <Grid HeightRequest="150">
+                <Image Source="frietenheader.png"
+                       Aspect="AspectFill"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       Opacity="0.6"/>
+                <Label Text="Ashley's Fritje"
+                       TextColor="#B83C3C"
+                       FontSize="40"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Padding="10" 
+                       FontFamily="Merienda"/>
+            </Grid>
+
+            <VerticalStackLayout Padding="10" Spacing="20" BackgroundColor="#FCFAEF">
+                <Label Text="{Binding Order.Name}" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,10" />
+
+                <Frame Padding="10" BorderColor="black" CornerRadius="10" BackgroundColor="#F1E8DA">
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="10">
+
+                        <Label Text="Datum bestelling: " 
+                               FontAttributes="Bold" 
+                               Grid.Row="0" 
+                               Grid.Column="0" 
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Order.DateOrdered, StringFormat='{0:dd/MM/yy}'}" 
+                               Grid.Row="0" 
+                               Grid.Column="1" 
+                               VerticalOptions="Center"/>
+
+                        <Label Text="Uur besteld: " 
+                               FontAttributes="Bold" 
+                               Grid.Row="1" 
+                               Grid.Column="0" 
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Order.DateOrdered, StringFormat='{0:HH:mm}'}" 
+                               Grid.Row="1" 
+                               Grid.Column="1" 
+                               VerticalOptions="Center"/>
+
+                        <Label Text="Uur afgehaald: " 
+                               FontAttributes="Bold" 
+                               Grid.Row="2" 
+                               Grid.Column="0" 
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Order.DateDelivered, StringFormat='{0:HH:mm}'}" 
+                               Grid.Row="2" 
+                               Grid.Column="1" 
+                               VerticalOptions="Center"/>
+
+                        <Label Text="Totaalbedrag: " 
+                               FontAttributes="Bold" 
+                               Grid.Row="3" 
+                               Grid.Column="0" 
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Order.TotalPrice, StringFormat='€{0:F2}'}" 
+                               Grid.Row="3" 
+                               Grid.Column="1" 
+                               VerticalOptions="Center"/>
+
+                        <Frame Padding="10" Margin="0,0,10,0" BorderColor="black" CornerRadius="10" BackgroundColor="#D9CAB8" Grid.RowSpan="4" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End">
+                            <Label Text="{Binding Order.Status}" 
+                                   FontAttributes="Bold" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center"/>
+                        </Frame>
+                    </Grid>
+                </Frame>
+
+                <Frame Padding="10" BorderColor="black" CornerRadius="10" BackgroundColor="#F1E8DA">
+                    <CollectionView ItemsSource="{Binding Order.OrderItems}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:OrderItem">
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="80, *" RowDefinitions="Auto, Auto, Auto" RowSpacing="5" Margin="0,10">
+
+                                        <Label Text="{Binding ProductName}" 
+                                               FontAttributes="Bold" 
+                                               Grid.Row="0" 
+                                               Grid.Column="0"
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Start"/>
+
+                                        <Label Text="Aantal: " 
+                                               FontAttributes="Bold" 
+                                               Grid.Row="1" 
+                                               Grid.Column="0" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Start"/>
+                                        <Label Text="{Binding Quantity}" 
+                                               Grid.Row="1" 
+                                               Grid.Column="1" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Start"/>
+
+                                        <Label Text="Prijs: " 
+                                               FontAttributes="Bold" 
+                                               Grid.Row="2" 
+                                               Grid.Column="0" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Start"/>
+                                        <Label Text="{Binding ProductPrice, StringFormat='€{0:F2}'}" 
+                                               Grid.Row="2" 
+                                               Grid.Column="1" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Start"/>
+                                    </Grid>
+                                    <BoxView Color="Black" HeightRequest="1" Margin="0,10,0,10"/>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
