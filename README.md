@@ -34,27 +34,27 @@ Ashley’s Fritje is een mobiele applicatie ontwikkeld met .NET MAUI voor Androi
 
 ### Screenshots
 #### Gebruiker algemeen
-- [Login](screenshots/login.png)
-- [Registratie](screenshots/registratie.png)
-- [Account overzicht (niet ingelogd)](screenshots/account-overview-user.png)
+- [Login](Screenshots/login.png)
+- [Registratie](Screenshots/registratie.png)
+- [Account overzicht (niet ingelogd)](Screenshots/account-overview-user.png)
 
 #### Klant
-- [Home client](screenshots/home-client.png)
-- [Account overzicht klant](screenshots/account-overview-client.png)
-- [Menu overzicht](screenshots/menu-overview-client.png)
-- [Winkelwagen](screenshots/shoppingcart.png)
-- [Bestelling geplaatst](screenshots/order-placed-client.png)
-- [Overzicht bestellingen](screenshots/orders-overview-client.png)
-- [Overzicht bestelling](screenshots/order-overview-client.png)
+- [Home client](Screenshots/home-client.png)
+- [Account overzicht klant](Screenshots/account-overview-client.png)
+- [Menu overzicht](Screenshots/menu-overview-client.png)
+- [Winkelwagen](Screenshots/shoppingcart.png)
+- [Bestelling geplaatst](Screenshots/order-placed-client.png)
+- [Overzicht bestellingen](Screenshots/orders-overview-client.png)
+- [Overzicht bestelling](Screenshots/order-overview-client.png)
 
 #### Beheerder
-- [Home admin](screenshots/home-admin.png)
-- [Account overzicht admin](screenshots/account-overview-admin.png)
-- [Menu overzicht admin](screenshots/menu-overview-admin.png)
-- [Categorie toevoegen](screenshots/categorie-toevoegen.png)
-- [Categorie verwijderen](screenshots/categorie-verwijderen.png)
-- [Product toevoegen](screenshots/product-toevoegen.png)
-- [Product updaten](screenshots/product-wijzigen.png)
-- [Overzicht bestellingen](screenshots/orders-overview-admin.png)
-- [Overzicht bestelling](screenshots/order-overview-admin.png)
+- [Home admin](Screenshots/home-admin.png)
+- [Account overzicht admin](Screenshots/account-overview-admin.png)
+- [Menu overzicht admin](Screenshots/menu-overview-admin.png)
+- [Categorie toevoegen](Screenshots/categorie-toevoegen.png)
+- [Categorie verwijderen](Screenshots/categorie-verwijderen.png)
+- [Product toevoegen](Screenshots/product-toevoegen.png)
+- [Product updaten](Screenshots/product-wijzigen.png)
+- [Overzicht bestellingen](Screenshots/orders-overview-admin.png)
+- [Overzicht bestelling](Screenshots/order-overview-admin.png)
 
