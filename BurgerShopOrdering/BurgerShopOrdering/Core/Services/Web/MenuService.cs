@@ -116,7 +116,7 @@ namespace BurgerShopOrdering.Core.Services.Web
                 Name = product.Name,
                 Price = product.Price,
                 Image = string.IsNullOrEmpty(product.Image) ? null : product.Image,
-                CategorieIds = product.Categories.Select(c => c.Id).ToArray()
+                CategoryIds = product.Categories.Select(c => c.Id).ToArray()
             };
 
             var result = await _productApiService.CreateProductAsync(newProduct, await _accountService.GetTokenAsync());
@@ -144,7 +144,7 @@ namespace BurgerShopOrdering.Core.Services.Web
                 Name = product.Name,
                 Price = product.Price,
                 Image = string.IsNullOrEmpty(product.Image) ? null : product.Image,
-                CategorieIds = product.Categories.Select(c => c.Id).ToList()
+                CategoryIds = product.Categories.Select(c => c.Id).ToList()
             };
 
             var result = await _productApiService.UpdateProductAsync(productToUpdate, await _accountService.GetTokenAsync());

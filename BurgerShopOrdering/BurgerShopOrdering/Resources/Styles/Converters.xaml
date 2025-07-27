@@ -6,4 +6,6 @@
     xmlns:converters="clr-namespace:BurgerShopOrdering.Converters">
 
     <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+    <converters:BoolToArrowConverter x:Key="BoolToArrowConverter" />
+    <converters:PriceToFormattedStringConverter x:Key="PriceToFormattedStringConverter"/>
 </ResourceDictionary>

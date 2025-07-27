@@ -74,7 +74,8 @@
                             CornerRadius="15"
                             BorderWidth="1"
                             HorizontalOptions="Center"
-                            VerticalOptions="Center">
+                            VerticalOptions="Center"
+                            Command="{Binding OnProductAddTappedCommand}">
                         <Button.ImageSource>
                             <FontImageSource Glyph="&#xe145;" 
                                              FontFamily="MaterialIcons" 
