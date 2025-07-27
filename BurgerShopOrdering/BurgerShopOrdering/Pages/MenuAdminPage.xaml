@@ -116,7 +116,9 @@
                                                 BorderColor="Black"
                                                 CornerRadius="15"
                                                 BorderWidth="1"
-                                                Margin="0,0,5,0">
+                                                Margin="0,0,5,0"
+                                                Command="{Binding Source={x:Reference menuadminpage}, Path=BindingContext.OnProductEditTappedCommand}"
+                                                CommandParameter="{Binding .}">
                                             <Button.ImageSource>
                                                 <FontImageSource Glyph="&#xe254;" 
                                                                  FontFamily="MaterialIcons" 
