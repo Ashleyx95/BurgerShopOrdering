@@ -159,6 +159,7 @@
                         <DataTemplate>
                             <VerticalStackLayout>
                                 <Button Text="Verwijder deze categorie"
+                                        Command="{Binding Source={x:Reference menuadminpage}, Path=BindingContext.OnCategoryDeleteTappedCommand}"
                                         BackgroundColor="#D9CAB8" 
                                         TextColor="Black" 
                                         BorderColor="Black" 

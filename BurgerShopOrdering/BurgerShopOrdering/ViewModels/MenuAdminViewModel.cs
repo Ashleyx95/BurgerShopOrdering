@@ -17,6 +17,8 @@ namespace BurgerShopOrdering.ViewModels
         public ICommand OnCategoryTappedCommand => new Command<Category>(category => OnCategoryTapped(category));
 
         public ICommand OnCategoryAddTappedCommand => new Command(async () => await Shell.Current.GoToAsync("CategoryAddAdminPage"));
+        public ICommand OnCategoryDeleteTappedCommand => new Command(async () => await DeleteCategoryAsync());
+
         private async void OnCategoryTapped(Category category)
         {
             foreach (var c in Categories)
@@ -46,6 +48,39 @@ namespace BurgerShopOrdering.ViewModels
             Categories.Insert(0, new Category { Name = "Alle producten", IsSelected = true });
             UpdateCollectionViewHeight();
 
+        public async Task DeleteCategoryAsync()
+        {
+            var category = Categories.First(c => c.IsSelected);
+
+            if (category.Name == "Alle producten")
+            {
+                await App.Current.MainPage.DisplayAlert("Fout", $"Deze categorie kan niet verwijderd worden", "OK");
+                return;
+            }
+
+            bool isConfirmed = await App.Current.MainPage.DisplayAlert(
+                "Bevestiging",
+                $"Weet je zeker dat je de categorie '{category.Name}' wilt verwijderen?",
+                "Ja", "Nee");
+
+            if (!isConfirmed)
+                return;
+
+            var result = await _menuService.RemoveCategory(category);
+
+            if (!result.Success)
+            {
+                var errorMessage = result.Message;
+
+                if (result.Errors.Any())
+                    errorMessage += Environment.NewLine + string.Join(Environment.NewLine, result.Errors);
+
+                await App.Current.MainPage.DisplayAlert("Fout", errorMessage, "OK");
+                return;
+            }
+
+            await LoadProductsAndCategoriesAsync();
+        }
         }
     }
 }
