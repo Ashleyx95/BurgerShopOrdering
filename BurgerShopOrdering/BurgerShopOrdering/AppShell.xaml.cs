@@ -20,6 +20,7 @@ namespace BurgerShopOrdering
             Routing.RegisterRoute("ProductAddAdminPage", typeof(ProductAddAdminPage));
             Routing.RegisterRoute("ProductUpdateAdminPage", typeof(ProductUpdateAdminPage));
             Routing.RegisterRoute("CategoryAddAdminPage", typeof(CategoryAddAdminPage));
+            Routing.RegisterRoute("OrderAdminPage", typeof(OrderAdminPage));
         }
 
         private async Task InitializeAsync()

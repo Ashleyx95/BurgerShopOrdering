@@ -12,6 +12,7 @@ namespace BurgerShopOrdering.Core.Services.Interfaces
         Task<ICollection<Order>> GetOrdersAsync();
         Task<ICollection<Order>> GetOrdersByStatusAsync(string status);
         Task<ResultModel> CreateOrderAsync(Order order);
+        Task<ResultModel> UpdateOrderStatusAsync(Order order);
         decimal CalculateTotalPriceOrderItem(decimal price, int quantity);
         decimal CalculateTotalPriceOrder(Order order);
         int CalculateTotalItemsInOrder(Order order);

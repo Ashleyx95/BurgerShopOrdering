@@ -60,6 +60,8 @@ namespace BurgerShopOrdering.ViewModels
         public ICommand OnLoginClickedCommand => new Command(async () => await Shell.Current.GoToAsync("LoginPage"));
         public ICommand OnLogoutClickedCommand => new Command(async () => await TryLogoutAsync());
         public ICommand OnOrderClientClickedCommand => new Command(async () => await Shell.Current.GoToAsync("OrdersPage"));
+        public ICommand OnOrderAdminClickedCommand => new Command(async () => await Shell.Current.GoToAsync("//OrdersPage"));
+        public ICommand OnMenuAmendClickedCommand => new Command(async () => await Shell.Current.GoToAsync("//MenuAdminPage"));
 
         private async Task TryLogoutAsync()
         {

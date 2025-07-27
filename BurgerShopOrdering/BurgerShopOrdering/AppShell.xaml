@@ -40,7 +40,7 @@
         ContentTemplate="{DataTemplate pages:MenuAdminPage}" Route="MenuAdminPage"/>
         <ShellContent
         Icon="{FontImageSource Glyph=&#xe85d;, FontFamily=MaterialIcons}"
-        ContentTemplate="{DataTemplate pages:OrdersAdminPage}" Route="OrdersAdminPage"/>
+        ContentTemplate="{DataTemplate pages:OrdersPage}" Route="OrdersPage"/>
         <ShellContent
         Icon="{FontImageSource Glyph=&#xe853;, FontFamily=MaterialIcons}"
         ContentTemplate="{DataTemplate pages:AccountPage}" Route="AccountPage"/>

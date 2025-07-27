@@ -55,6 +55,18 @@ namespace BurgerShopOrdering.Core.Services.Web
 
             return new ResultModel { Success = result.Success, Message = result.Message, Errors = result.Errors };
         }
+        public async Task<ResultModel> UpdateOrderStatusAsync(Order order)
+        {
+            var orderToUpdate = new OrderUpdateRequestApiModel
+            {
+                Id = order.Id,
+                Status = (BurgerShopApiConsumer.Orders.Model.OrderStatus)order.Status,
+            };
+
+            var result = await _orderApiService.UpdateOrderAsync(orderToUpdate, await _accountService.GetTokenAsync());
+
+            return new ResultModel { Success = result.Success, Message = result.Message, Errors = result.Errors };
+        }
         public int CalculateTotalItemsInOrder(Order order)
         {
             int totalItems = 0;
