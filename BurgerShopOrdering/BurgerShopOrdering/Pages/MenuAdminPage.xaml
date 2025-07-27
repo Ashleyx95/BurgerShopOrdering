@@ -38,7 +38,8 @@
                                 FontAttributes="Bold"
                                 BorderColor="Black"
                                 BorderWidth="1" 
-                                CornerRadius="5">
+                                CornerRadius="5"
+                                Command="{Binding OnCategoryAddTappedCommand}">
                             <Button.ImageSource>
                                 <FontImageSource Glyph="&#xe145;" 
                                                  FontFamily="MaterialIcons" 

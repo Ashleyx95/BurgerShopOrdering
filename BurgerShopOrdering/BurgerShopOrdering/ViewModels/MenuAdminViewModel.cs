@@ -16,6 +16,7 @@ namespace BurgerShopOrdering.ViewModels
         public ICommand OnAppearingCommand => new Command(async () => await LoadProductsAndCategoriesAsync());
         public ICommand OnCategoryTappedCommand => new Command<Category>(category => OnCategoryTapped(category));
 
+        public ICommand OnCategoryAddTappedCommand => new Command(async () => await Shell.Current.GoToAsync("CategoryAddAdminPage"));
         private async void OnCategoryTapped(Category category)
         {
             foreach (var c in Categories)

@@ -61,6 +61,8 @@ namespace BurgerShopOrdering
             builder.Services.AddTransient<BaseOrderViewModel>();
             builder.Services.AddTransient<OrderPlacedPage>();
             builder.Services.AddTransient<OrderPlacedViewModel>();
+            builder.Services.AddTransient<CategoryAddAdminPage>();
+            builder.Services.AddTransient<CategoryAddAdminViewModel>();
 
             return builder.Build();
         }
