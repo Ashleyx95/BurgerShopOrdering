@@ -24,6 +24,7 @@ namespace BurgerShopOrdering.ViewModels
 
             await Shell.Current.GoToAsync("ProductUpdateAdminPage");
         });
+        public ICommand OnProductDeleteTappedCommand => new Command<Product>(async (Product) => await DeleteProductAsync(Product));
         public ICommand OnCategoryAddTappedCommand => new Command(async () => await Shell.Current.GoToAsync("CategoryAddAdminPage"));
         public ICommand OnCategoryDeleteTappedCommand => new Command(async () => await DeleteCategoryAsync());
 
@@ -55,6 +56,8 @@ namespace BurgerShopOrdering.ViewModels
             Categories = new ObservableCollection<Category>(await _menuService.GetCategoriesAsync());
             Categories.Insert(0, new Category { Name = "Alle producten", IsSelected = true });
             UpdateCollectionViewHeight();
+
+        }
 
         public async Task DeleteCategoryAsync()
         {
@@ -89,6 +92,31 @@ namespace BurgerShopOrdering.ViewModels
 
             await LoadProductsAndCategoriesAsync();
         }
+
+        public async Task DeleteProductAsync(Product product)
+        {
+            bool isConfirmed = await App.Current.MainPage.DisplayAlert(
+                "Bevestiging",
+                $"Weet je zeker dat je het product '{product.Name}' wilt verwijderen?",
+                "Ja", "Nee");
+
+            if (!isConfirmed)
+                return;
+
+            var result = await _menuService.RemoveProductFromMenu(product);
+
+            if (!result.Success)
+            {
+                var errorMessage = result.Message;
+
+                if (result.Errors.Any())
+                    errorMessage += Environment.NewLine + string.Join(Environment.NewLine, result.Errors);
+
+                await App.Current.MainPage.DisplayAlert("Fout", errorMessage, "OK");
+                return;
+            }
+
+            await LoadProductsAndCategoriesAsync();
         }
     }
 }

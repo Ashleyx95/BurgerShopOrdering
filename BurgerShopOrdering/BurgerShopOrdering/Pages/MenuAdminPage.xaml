@@ -134,7 +134,9 @@
                                                 BorderColor="Black"
                                                 CornerRadius="15"
                                                 BorderWidth="1"
-                                                Margin="0,0,0,0">
+                                                Margin="0,0,0,0"
+                                                Command="{Binding Source={x:Reference menuadminpage}, Path=BindingContext.OnProductDeleteTappedCommand}"
+                                                CommandParameter="{Binding .}">
                                             <Button.ImageSource>
                                                 <FontImageSource Glyph="&#xE5CD;" 
                                                                  FontFamily="MaterialIcons" 
