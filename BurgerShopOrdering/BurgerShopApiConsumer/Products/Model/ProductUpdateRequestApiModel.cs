@@ -11,7 +11,7 @@ namespace BurgerShopApiConsumer.Products.Model
         public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public ICollection<Guid> CategorieIds { get; set; } = [];
+        public ICollection<Guid> CategoryIds { get; set; } = [];
         public string? Image { get; set; }
     }
 }

@@ -150,6 +150,8 @@ namespace BurgerShopOrdering.test.API
             var token = new JwtSecurityToken();
 
             _userManagerMock.Setup(u => u.FindByEmailAsync(dto.Email)).ReturnsAsync(user);
+            _userManagerMock.Setup(x => x.GetRolesAsync(user))
+                            .ReturnsAsync(new List<string> { "Admin", "Client" });
             _signInManagerMock.Setup(s => s.PasswordSignInAsync(user, dto.Password, false, true))
                 .ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Success);
             _accountServiceMock.Setup(a => a.GenerateTokenAsync(user)).ReturnsAsync(token);

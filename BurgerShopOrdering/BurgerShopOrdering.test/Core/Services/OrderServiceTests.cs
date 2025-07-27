@@ -224,7 +224,12 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Order1", 10.0m, 2, null);
+
+            var user = new ApplicationUser("John", "Doe", "john@example.com");
+
+            context.Users.Add(user);
+
+            var order = new Order(user.Id, "Order1", 10.0m, 2, null);
             var service = new OrderService(context);
 
             // Act
@@ -243,8 +248,13 @@ namespace BurgerShopOrdering.test.Core.Services
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var order = new Order("user1", "Order1", 10.0m, 2, null);
+
+            var user = new ApplicationUser("John", "Doe", "john@example.com");
+            context.Users.Add(user);
+
+            var order = new Order(user.Id, "Order1", 10.0m, 2, null);
             context.Orders.Add(order);
+
             await context.SaveChangesAsync();
             var service = new OrderService(context);
 

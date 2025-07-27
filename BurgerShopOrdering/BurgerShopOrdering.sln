@@ -3,17 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerShopOrdering.api", "BurgerShopOrdering.api\BurgerShopOrdering.api.csproj", "{95EC0A42-BB42-4FEF-9737-C6AF36A27F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BurgerShopOrdering.api", "BurgerShopOrdering.api\BurgerShopOrdering.api.csproj", "{95EC0A42-BB42-4FEF-9737-C6AF36A27F93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{542B0AED-0EDB-428C-B3A2-E41F2D896550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerShopOrdering.core", "BurgerShopOrdering.core\BurgerShopOrdering.core.csproj", "{A39EA7B4-3F2E-435C-A108-B4B5F8EDEEB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BurgerShopOrdering.core", "BurgerShopOrdering.core\BurgerShopOrdering.core.csproj", "{A39EA7B4-3F2E-435C-A108-B4B5F8EDEEB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerShopOrdering.test", "BurgerShopOrdering.test\BurgerShopOrdering.test.csproj", "{3C65123A-90D0-4532-8589-9906D466EE2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BurgerShopOrdering.test", "BurgerShopOrdering.test\BurgerShopOrdering.test.csproj", "{3C65123A-90D0-4532-8589-9906D466EE2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIConsumer", "APIConsumer", "{8CB9D37A-AD94-4AD5-BA00-AB5CBEC88F7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerShopApiConsumer", "BurgerShopApiConsumer\BurgerShopApiConsumer.csproj", "{15B9C250-34C4-4DE1-B92B-657E0364CB1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BurgerShopApiConsumer", "BurgerShopApiConsumer\BurgerShopApiConsumer.csproj", "{15B9C250-34C4-4DE1-B92B-657E0364CB1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{145F8CEF-8967-410A-8E86-C908E19ED789}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BurgerShopOrdering", "BurgerShopOrdering\BurgerShopOrdering.csproj", "{246100A7-E71E-459D-85FD-E3ADB0F21A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerShopTests.test", "BurgerShopTests.test\BurgerShopTests.test.csproj", "{22D83DE6-A837-4F93-A796-BF62BA8622B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +43,16 @@ Global
 		{15B9C250-34C4-4DE1-B92B-657E0364CB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15B9C250-34C4-4DE1-B92B-657E0364CB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15B9C250-34C4-4DE1-B92B-657E0364CB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{22D83DE6-A837-4F93-A796-BF62BA8622B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D83DE6-A837-4F93-A796-BF62BA8622B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D83DE6-A837-4F93-A796-BF62BA8622B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D83DE6-A837-4F93-A796-BF62BA8622B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +62,8 @@ Global
 		{A39EA7B4-3F2E-435C-A108-B4B5F8EDEEB1} = {542B0AED-0EDB-428C-B3A2-E41F2D896550}
 		{3C65123A-90D0-4532-8589-9906D466EE2A} = {542B0AED-0EDB-428C-B3A2-E41F2D896550}
 		{15B9C250-34C4-4DE1-B92B-657E0364CB1D} = {8CB9D37A-AD94-4AD5-BA00-AB5CBEC88F7E}
+		{246100A7-E71E-459D-85FD-E3ADB0F21A6B} = {145F8CEF-8967-410A-8E86-C908E19ED789}
+		{22D83DE6-A837-4F93-A796-BF62BA8622B9} = {145F8CEF-8967-410A-8E86-C908E19ED789}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6509D81-C2E8-4283-B696-48FFB78E7DB4}

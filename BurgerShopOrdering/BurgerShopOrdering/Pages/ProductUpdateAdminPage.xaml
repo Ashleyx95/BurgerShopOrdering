@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BurgerShopOrdering.Pages.ProductUpdateAdminPage"
+             xmlns:viewmodels="clr-namespace:BurgerShopOrdering.ViewModels"
+             xmlns:models="clr-namespace:BurgerShopOrdering.Core.Models"
+             xmlns:converters="clr-namespace:BurgerShopOrdering.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodels:ProductUpdateAdminViewModel"
+             Title="Product update"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="#FCFAEF">
+            <Grid HeightRequest="150">
+                <Image Source="frietenheader.png"
+                       Aspect="AspectFill"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       Opacity="0.6"/>
+                <Label Text="Ashley's Fritje"
+                       TextColor="#B83C3C"
+                       FontSize="40"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Padding="10" 
+                       FontFamily="Merienda"/>
+            </Grid>
+
+            <VerticalStackLayout Padding="30" Spacing="10">
+                <Label Text="Wijzig product" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,10" />
+
+                <Grid ColumnDefinitions="Auto, *" Margin="0,10">
+                    <Label Text="Naam:" 
+                           FontSize="15" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" 
+                           HorizontalOptions="Start" 
+                           TextColor="Black" />
+                    <Entry Placeholder="Naam van het product" 
+                           Text="{Binding ProductToSave.Name}" 
+                           BackgroundColor="#FCFAEF" 
+                           TextColor="Black" 
+                           Grid.Column="1"
+                           HorizontalOptions="FillAndExpand" />
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto, *">
+                    <Label Text="Prijs: €" 
+                           FontSize="15" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" 
+                           HorizontalOptions="Start" 
+                           TextColor="Black" />
+                    <Entry Placeholder="Prijs"
+                           Text="{Binding ProductToSave.Price, Converter={converters:PriceToFormattedStringConverter}}" 
+                           Keyboard="Numeric"
+                           BackgroundColor="#FCFAEF" 
+                           TextColor="Black" 
+                           Grid.Column="1"
+                           HorizontalOptions="FillAndExpand" />
+                </Grid>
+
+                <Button Text="Selecteer Categorieën" 
+                        Command="{Binding ToggleCategoriesVisibilityCommand}" 
+                        BackgroundColor="#D9CAB8" 
+                        TextColor="Black" 
+                        BorderColor="Black" 
+                        BorderWidth="1" 
+                        CornerRadius="5" 
+                        FontAttributes="Bold"
+                        HorizontalOptions="Start"
+                        Margin="0,10" >
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="{Binding CategoriesVisible, Converter={converters:BoolToArrowConverter}}"
+                                        FontFamily="MaterialIcons" 
+                                        Size="20" 
+                                        Color="Black"/>
+                    </Button.ImageSource>
+                </Button>
+
+                <VerticalStackLayout IsVisible="{Binding CategoriesVisible}" BackgroundColor="#FCFAEF" Margin="0,10">
+                    <CollectionView ItemsSource="{Binding Categories}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Category">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox IsChecked="{Binding IsSelected}" 
+                                              VerticalOptions="Center" 
+                                              HorizontalOptions="Start"
+                                              Color="#D9CAB8" />
+                                    <Label Text="{Binding Name}" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Start" 
+                                           FontSize="Medium" 
+                                           Grid.Column="1" 
+                                           Margin="10,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <Button Text="Kies afbeelding" 
+                        Command="{Binding PickImageCommand}" 
+                        BackgroundColor="#D9CAB8" 
+                        TextColor="Black" 
+                        BorderColor="Black" 
+                        BorderWidth="1" 
+                        CornerRadius="5" 
+                        FontAttributes="Bold"
+                        HorizontalOptions="Start"
+                        Margin="0,10" />
+
+                <Image IsVisible="{Binding NewImageUploaded}"
+                       Source="{Binding NewImage}"
+                       Aspect="AspectFill"
+                       WidthRequest="80"
+                       HeightRequest="80"
+                       Margin="0, 10" 
+                       HorizontalOptions="Start" />
+
+                <Button Text="Opslaan" 
+                        Command="{Binding OnEditCommand}" 
+                        BackgroundColor="#D9CAB8" 
+                        TextColor="Black" 
+                        BorderColor="Black" 
+                        BorderWidth="1" 
+                        CornerRadius="5" 
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="0,10" />
+
+                <Button Text="Annuleren" 
+                        Command="{Binding OnCancelCommand}" 
+                        BackgroundColor="#D9CAB8" 
+                        TextColor="Black" 
+                        BorderColor="Black" 
+                        BorderWidth="1" 
+                        CornerRadius="5" 
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="0,10" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

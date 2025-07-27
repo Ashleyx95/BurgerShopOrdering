@@ -9,5 +9,6 @@ namespace BurgerShopApiConsumer.Users.Model
     public class UserLoginResponseApiModel
     {
         public string Token { get; set; }
+        public UserResponseApiModel User { get; set; }
     }
 }
